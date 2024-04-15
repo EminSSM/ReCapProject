@@ -20,6 +20,7 @@ namespace WebApi
             // Add services to the container.
 
             builder.Services.AddControllers();
+            builder.Services.AddCors();
             builder.Host.UseServiceProviderFactory(services => new AutofacServiceProviderFactory());
             builder.Host.ConfigureContainer<ContainerBuilder>(builder => builder.RegisterModule(new AutofacBusinessModule()));
             builder.Services.AddEndpointsApiExplorer();
@@ -53,6 +54,7 @@ namespace WebApi
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
+            app.UseCors(builder => builder.WithOrigins("http://localhost:4200/").AllowAnyHeader().AllowAnyOrigin().AllowAnyMethod());
 
             app.UseHttpsRedirection();
 
